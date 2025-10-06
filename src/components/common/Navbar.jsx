@@ -7,7 +7,7 @@ import { RxCross2 } from "react-icons/rx";
 import { Menu, Transition } from "@headlessui/react";
 
 import { apiConnector } from "../../services/apiconnector";
-import { categories } from "../../services/apis";
+import { categoriesEndpoints } from '../../services/apis'
 import { NavbarLinks } from "../../data/navbar-links";
 import logoImg from "../../assets/Logo/Logo-Full-Light.png";
 import { logout } from "../../slices/authSlice";
@@ -31,7 +31,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const result = await apiConnector("GET", categories.CATEGORIES_API);
+        const result = await apiConnector("GET", categoriesEndpoints.CATEGORIES_API);
         setSubLinks(result?.data?.data || []);
       } catch (error) {
         console.error("Error fetching categories:", error);
