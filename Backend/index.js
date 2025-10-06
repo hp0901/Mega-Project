@@ -54,6 +54,7 @@ app.use("/api/v1/auth" , (req,res,next)=> {
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentRoutes);
+console.log("indeisde stp3 index js of backend");
 app.use("/api/v1/reach", contactUsRoute);
 
 //def route
