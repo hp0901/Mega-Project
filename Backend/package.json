@@ -2,12 +2,14 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  
+ "scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+}
+,
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -30,7 +32,6 @@
     "nodemailer": "^6.10.0",
     "nodemon": "^3.1.9",
     "otp-generator": "^4.0.1",
-    "razorpay": "^2.9.5",
-    "react-scripts": "^5.0.1"
+    "razorpay": "^2.9.5"
   }
 }
