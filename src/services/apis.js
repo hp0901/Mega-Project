@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:4000";
+const BASE_URL = "https://mega-project-bs9q.onrender.com" || "http://localhost:4000";
 
 // AUTH ENDPOINTS
 export const endpoints = { // Changed to authEndpoints for clarity
