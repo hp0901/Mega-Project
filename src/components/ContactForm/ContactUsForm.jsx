@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {useForm} from "react-hook-form"
 import CountryCode from "../../data/countrycode.json"
-
+import { apiConnector } from '../../services/apiconnector'
+import { contactusEndpoint } from '../../services/apis'
+import toast from 'react-hot-toast'
 
 const ContactUsForm = () => {
 
@@ -13,16 +15,21 @@ const ContactUsForm = () => {
         formState:{errors,isSubmitSuccessful}
     } = useForm();
 
-    const submitContactForm = async(data) => {
+        const submitContactForm = async(data) => {
         console.log(data)
         try{
             setLoading(true)
-            const response={status:"OK"};
-            console.log("Logging response", response);
-            setLoading(false);
+        const res = await apiConnector(
+        "POST",
+        contactusEndpoint.CONTACT_US_API,
+        data
+        )
+        toast.success("Query sent successfully")
+        setLoading(false);
         }
         catch(error){
             console.log("Error:" , error.message);
+            toast.error("Could not send the query. Please try again later.")
             setLoading(false);
         }
     }
