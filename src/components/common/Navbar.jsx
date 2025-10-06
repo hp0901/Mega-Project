@@ -24,7 +24,7 @@ const Navbar = () => {
   const location = useLocation();
 
   // Local state
-  const [subLinks, setSubLinks] = useState([]);
+  const [ setSubLinks] = useState([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Fetch categories for sublinks (can be used later)
