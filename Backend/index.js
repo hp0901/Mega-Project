@@ -25,11 +25,19 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(
-	cors({
-		origin: ["http://localhost:3000", "https://mega-project-ten.vercel.app", "https://mega-project-ntwu.vercel.app/"], // allowed origins
-		credentials:true,
-	})
-)
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://mega-project-ten.vercel.app",
+      "https://mega-project-ntwu.vercel.app"
+    ],
+    credentials: true,
+  })
+);
+
+// Handle preflight requests for all routes
+app.options("*", cors());
+
 
 
 app.use(
@@ -47,8 +55,8 @@ cloudinaryConnect();
 //routes
   console.log("indeisde stp2 index js of backend");
 app.use("/api/v1/auth" , (req,res,next)=> {
-	res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
-  	res.setHeader("Cross-Origin-Embedder-Policy", "unsafe-none");
+	// res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  	// res.setHeader("Cross-Origin-Embedder-Policy", "unsafe-none");
   	next();
 } ,userRoutes);
 app.use("/api/v1/profile", profileRoutes);
