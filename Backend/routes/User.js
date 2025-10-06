@@ -38,7 +38,7 @@ router.post("/changepassword", auth, changePassword)
 // Route for Google Login
   console.log("indeisde stp3 user js");
 router.post("/googlelogin", googlelogin)
-
+console.log("indeisde stp4 user js");
 // ********************************************************************************************************
 //                                      Reset Password
 // ********************************************************************************************************
@@ -48,6 +48,6 @@ router.post("/reset-password-token", resetPasswordToken)
 
 // Route for resetting user's password after verification
 router.post("/reset-password", resetPassword)
-
+console.log("outside stp4 user js");
 // Export the router for use in the main application
 module.exports = router
