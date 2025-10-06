@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 app.use(
 	cors({
-		origin:["http://localhost:3000", "https://mega-project-nzmjo6cmf-harsh-patels-projects-0210bdd8.vercel.app"],
+		origin: ["http://localhost:3000", "https://mega-project-ten.vercel.app"], // allowed origins
 		credentials:true,
 	})
 )
