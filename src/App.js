@@ -46,7 +46,7 @@ function App  ()  {
        <Route path="/catalog/:catalogName" element={<Catalog />} />
        <Route path="/catalog" element={<Catalog />} />       
        <Route
-           path="/signup"
+           path="signup"
            element={
              <OpenRoute>
                <Signup />
@@ -54,7 +54,7 @@ function App  ()  {
            }
          />
      <Route
-           path="/login"
+           path="login"
            element={
              <OpenRoute>
                <Login />

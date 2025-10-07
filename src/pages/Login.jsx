@@ -3,7 +3,8 @@ import loginImg from '../assets/Images/login.webp'
 import Template from '../components/core/Template'
 const Login = () => {
   return (
-    <div>
+    <div className='text-center text-white'>
+            <div>Harsh Patel-Signup</div>
         <Template
           title="Welcome Back"
           description1="Build skills for today, tomorrow, and beyond."
