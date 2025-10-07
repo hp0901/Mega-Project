@@ -1,8 +1,8 @@
 // ======================== AUTH ENDPOINTS ========================
 export const endpoints = {
-  SENDOTP_API: "https://mega-project-1-n6ad.onrender.com/api/v1/auth/sendotp",
-  SIGNUP_API: "https://mega-project-1-n6ad.onrender.com/api/v1/auth/signup",
-  LOGIN_API: "https://mega-project-1-n6ad.onrendercom/api/v1/auth/login",
+  SENDOTP_API: "https://mega-project-bs9q.onrender.com/api/v1/auth/sendotp",
+  SIGNUP_API: "https://mega-project-bs9q.onrender.com/api/v1/auth/signup",
+  LOGIN_API: "https://mega-project-bs9q.onrender.com/api/v1/auth/login",
   RESETPASSTOKEN_API: "https://mega-project-bs9q.onrender.com/api/v1/auth/reset-password-token",
   RESETPASSWORD_API: "https://mega-project-bs9q.onrender.com/api/v1/auth/reset-password",
   GOOGLE_LOGIN_API: "https://mega-project-bs9q.onrender.com/api/v1/auth/googlelogin",

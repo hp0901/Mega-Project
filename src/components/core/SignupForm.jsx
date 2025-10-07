@@ -84,7 +84,7 @@ function SignupForm()  {
 
     return (
         <div>
-          <div className='text-white'>Inside Signup form</div>
+          
           {/* Tab */}
           <Tab tabData={tabData} field={accountType} setField={setAccountType} />
           {/* Form */}
