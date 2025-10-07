@@ -4,13 +4,14 @@ import Template from '../components/core/Template'
 const Login = () => {
   return (
     <div>
-        <Template
+        {/* <Template
           title="Welcome Back"
           description1="Build skills for today, tomorrow, and beyond."
           description2="Education to future-proof your career."
           image={loginImg}
           formType="login"
-        />   
+        />    */}
+        <h1>Congratulations you Reached at login page.</h1>
     </div>
   )
 }
