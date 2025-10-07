@@ -12,6 +12,9 @@ const Template = ({ title,description1,description2,image,formType}) => {
 
   return (
     <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+    <div>
+      <div className="absolute left-0 top-0 -z-10 h-[300px] w-full bg-richblack-800">hii you reached in side the template</div> 
+    </div>
     {loading ? (
       <div className="spinner"></div>
     ) : (
