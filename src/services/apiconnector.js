@@ -1,18 +1,24 @@
-import axios from "axios"
+import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://mega-project-bs9q.onrender.com",  // ✅ your backend base URL
+  baseURL: "https://mega-project-bs9q.onrender.com", // ✅ Backend base URL (no trailing slash)
   withCredentials: true,
 });
 
-export const apiConnector = (method, url, bodyData, headers, params) => {
-   console.log("enter in apiConnector ",method, url, bodyData, headers, params);    
-    return axiosInstance({
-        method:`${method}`,
-        url:`${url}`,
-        data: bodyData ? bodyData : null,
-        headers: headers ? headers: null,
-        params: params ? params : null,
+export const apiConnector = async (method, url, bodyData, headers, params) => {
+  try {
+    console.log("👉 API CALL:", method, url);
+    const response = await axiosInstance({
+      method,
+      url,
+      data: bodyData || {},
+      headers: headers || {},
+      params: params || {},
     });
-    
-}
+    console.log("✅ API RESPONSE:", response);
+    return response;
+  } catch (error) {
+    console.error("❌ API ERROR:", error);
+    throw error;
+  }
+};
