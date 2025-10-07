@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 const ContactUsForm = () => {
 
 
-    const [loading,setLoading] = useState(false)
+    const [setLoading] = useState(false)
     const {
         register,
         handleSubmit,reset,
@@ -24,6 +24,7 @@ const ContactUsForm = () => {
         contactusEndpoint.CONTACT_US_API,
         data
         )
+        console.log("Response from contact us api" , res)
         toast.success("Query sent successfully")
         setLoading(false);
         }

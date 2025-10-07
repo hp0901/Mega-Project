@@ -56,22 +56,8 @@ export default function CourseInformationForm() {
         }
 
         getCategories();
-    }, []);
+    }, [course, editCourse, setValue]);
 
-    const isFormUpdated = () => {
-        const currentValues = getValues();
-        if (!course) return true; // New course
-        return (
-            currentValues.courseTitle !== course.courseName ||
-            currentValues.courseShortDesc !== course.courseDescription ||
-            currentValues.coursePrice !== course.price ||
-            currentValues.courseTags.toString() !== (course.tag || []).toString() ||
-            currentValues.courseBenefits !== course.whatYouWillLearn ||
-            currentValues.courseCategory !== course.category?._id ||
-            currentValues.courseRequirements.toString() !== (course.instructions || []).toString() ||
-            (thumbnailFile || currentValues.courseImage !== course.thumbnail)
-        );
-    }
 
     const onSubmit = async (data) => {
         try {

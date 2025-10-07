@@ -15,7 +15,7 @@ const CourseBuilderForm = () => {
   const { course } = useSelector((state) => state.course);
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-  const [loading, setLoading] = useState(false);
+  const [ setLoading] = useState(false);
 
   useEffect(() => {
     console.log("Course updated", course);

@@ -38,7 +38,7 @@ const Navbar = () => {
       }
     };
     fetchCategories();
-  }, []);
+  }, [setSubLinks]);
 
   // Close mobile menu on route change
   useEffect(() => {

@@ -11,7 +11,7 @@ import Upload from '../Upload';
 const SubSectionModal = ({ modalData, setModalData, add = false, view = false, edit = false }) => {
   const { register, handleSubmit, setValue, formState: { errors }, getValues } = useForm();
   const dispatch = useDispatch();
-  const { course } = useSelector((state) => state.course);
+  // const { course } = useSelector((state) => state.course);
   const { token } = useSelector((state) => state.auth);
 
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const SubSectionModal = ({ modalData, setModalData, add = false, view = false, e
       setValue("lectureDesc", modalData.description);
       setValue("lectureVideo", modalData.videoUrl);
     }
-  }, []);
+  }, [view, edit, setValue, modalData.title, modalData.description, modalData.videoUrl]);
 
   const isFormUpdated = () => {
     const currentValues = getValues();

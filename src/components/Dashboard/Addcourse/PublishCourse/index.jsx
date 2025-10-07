@@ -16,13 +16,13 @@ export default function PublishCourse() {
   const { token } = useSelector((state) => state.auth)
   const { course } = useSelector((state) => state.course)
   const [loading, setLoading] = useState(false)
-  const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [thumbnailFile] = useState(null);
 
   useEffect(() => {
     if (course?.status === COURSE_STATUS.PUBLISHED) {
       setValue("public", true)
     }
-  }, [])
+  }, [course?.status, setValue])
 
   const goBack = () => {
     dispatch(setStep(2))
