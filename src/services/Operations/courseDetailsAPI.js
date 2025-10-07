@@ -1,5 +1,5 @@
 import { toast } from "react-hot-toast"
-import axios from "axios"
+
 
 // import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 // import { setLoading } from "../../slices/profileSlice";

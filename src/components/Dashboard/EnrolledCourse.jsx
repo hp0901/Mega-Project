@@ -8,18 +8,17 @@ const EnrolledCourses = () => {
     const { token } = useSelector((state) => state.auth);
     const [enrolledCourses, setEnrolledCourses] = useState(null);
 
-    const getEnrolledCourses = async () => {
-        try {
-            const response = await getUserEnrolledCourses(token);
-            setEnrolledCourses(response);
-        } catch (error) {
-            console.log('Unable to Fetch Enrolled Courses');
-        }
-    };
-
     useEffect(() => {
+        const getEnrolledCourses = async () => {
+            try {
+                const response = await getUserEnrolledCourses(token);
+                setEnrolledCourses(response);
+            } catch (error) {
+                console.log('Unable to Fetch Enrolled Courses');
+            }
+        };
         getEnrolledCourses();
-    }, [])
+    }, [token])
 
     return (
         <div className="text-white p-4">

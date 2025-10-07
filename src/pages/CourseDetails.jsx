@@ -25,7 +25,7 @@ function CourseDetails() {
   const { user } = useSelector((state) => state.profile)
   const { token } = useSelector((state) => state.auth)
   const { loading } = useSelector((state) => state.profile)
-  const { paymentLoading } = useSelector((state) => state.course)
+  // const { paymentLoading } = useSelector((state) => state.course)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { courseId } = useParams()
@@ -58,7 +58,7 @@ function CourseDetails() {
   const course = response?.data?.[0] || {}
   const instructor = course?.instructor ?? { firstName: "", lastName: "", image: "", additionalDetails: {} }
   const {
-    _id: course_id = "",
+    // eslint-disable-next-line_id: course_id ,
     courseName = "Course Name",
     courseDescription = "No description available.",
     thumbnail = "",
