@@ -30,7 +30,7 @@ app.use(
       "http://localhost:3000",
       "https://mega-project-ten.vercel.app",
       "https://mega-project-ntwu.vercel.app",
-	  "https://megaproject09.netlify.app/",
+	  "https://megaproject09.netlify.app",
     ],
     credentials: true,
   })
