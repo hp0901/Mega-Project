@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://mega-project-bs9q.onrender.com", // ✅ Backend base URL (no trailing slash)
+  baseURL: process.env.REACT_APP_API_URL, // ✅ Backend base URL (no trailing slash)
   withCredentials: true,
 });
 
