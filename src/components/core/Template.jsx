@@ -7,16 +7,13 @@ import SignupForm from './SignupForm'
 const Template = ({ title,description1,description2,image,formType}) => {
 
     const {loading} =  useSelector(state => state.auth)
-    console.log("Loading is ".loading)
+    console.log("Loading is ",loading)
 
 
   return (
     <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-      <div className='text-white'>Hello you reached at Inside template</div>
     {loading ? (
-      <div className="spinner">
-        <div className="double-bounce1">loading is true</div>
-      </div>
+      <div className="spinner"></div>
     )
      :
       (
