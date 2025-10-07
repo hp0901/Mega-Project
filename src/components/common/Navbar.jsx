@@ -7,7 +7,7 @@ import { RxCross2 } from "react-icons/rx";
 import { Menu, Transition } from "@headlessui/react";
 
 import { apiConnector } from "../../services/apiconnector";
-import { categoriesEndpoints } from '../../services/apis'
+import { categoriesEndpoints } from '../../services/apis';
 import { NavbarLinks } from "../../data/navbar-links";
 import logoImg from "../../assets/Logo/Logo-Full-Light.png";
 import { logout } from "../../slices/authSlice";
@@ -24,21 +24,24 @@ const Navbar = () => {
   const location = useLocation();
 
   // Local state
-  const [ setSubLinks] = useState([]);
+  const [subLinks, setSubLinks] = useState([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Fetch categories for sublinks (can be used later)
+  // Fetch categories for sublinks
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const result = await apiConnector("GET", categoriesEndpoints.CATEGORIES_API);
+        console.log("SUbLinks", subLinks);
+        console.log("result ", result);
         setSubLinks(result?.data?.data || []);
       } catch (error) {
         console.error("Error fetching categories:", error);
+        setSubLinks([]); // fallback to empty array
       }
     };
     fetchCategories();
-  }, [setSubLinks]);
+  },  [] );
 
   // Close mobile menu on route change
   useEffect(() => {
