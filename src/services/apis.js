@@ -68,7 +68,7 @@ export const contactusEndpoint = {
 // ======================== SETTINGS PAGE API ========================
 export const settingsEndpoints = {
   UPDATE_DISPLAY_PICTURE_API: "https://mega-project-bs9q.onrender.com/api/v1/profile/updateDisplayPicture",
-  UPDATE_PROFILE_API: "https://mega-project-bs9q.onrender.com/api/v1/profile/updateProfile",
+  UPDATE_PROFILE_API: "https://mega-project-bs9q.onrender.com/api/v1/profile/changeProfile",
   CHANGE_PASSWORD_API: "https://mega-project-bs9q.onrender.com/api/v1/auth/changepassword",
   DELETE_PROFILE_API: "https://mega-project-bs9q.onrender.com/api/v1/profile/deleteProfile",
 };
