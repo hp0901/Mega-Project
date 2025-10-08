@@ -31,7 +31,7 @@ const Navbar = () => {
   // Fetch categories for sublinks
   useEffect(() => {
     const fetchCategories = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       try {
         const result = await apiConnector("GET", categoriesEndpoints.CATEGORIES_API);
         console.log("Api result:", result?.data?.data);
@@ -40,7 +40,7 @@ const Navbar = () => {
         console.error("Error fetching categories:", error);
         setSubLinks([]); // fallback to empty array
       }
-       setIsLoading(false);
+      //  setIsLoading(false);
     };
     fetchCategories();
   },  [] );

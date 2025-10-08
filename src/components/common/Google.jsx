@@ -19,7 +19,6 @@ const handleSuccess = async (credentialResponse) => {
 
     dispatch(setLoading(true));
     const toastId = toast.loading("Logging in with Google...");
-
     const response = await axios.post(GOOGLE_LOGIN_API, { token }, { withCredentials: true });
 
     if (response.data.success) {
