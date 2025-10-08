@@ -30,7 +30,7 @@ app.use(
       "*",
       "http://localhost:3000",                // ✅ for local frontend
       "https://megaproject09.netlify.app",  // ✅ your deployed frontend
-      "https://mega-project-flax.vercel.app/" // ✅ backend (for internal calls)
+      "https://mega-project-flax.vercel.app" // ✅ backend (for internal calls)
     ],
     credentials: true,
   })
