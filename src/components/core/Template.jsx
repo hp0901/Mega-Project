@@ -6,9 +6,9 @@ import SignupForm from './SignupForm'
 
 const Template = ({ title,description1,description2,image,formType}) => {
 
-    const {loading} =  useSelector(state => state.auth)
-    console.log("Loading is ",loading)
-
+    // const {loading} =  useSelector(state => state.auth)
+    // console.log("Loading is ",loading)
+    const loading=false;
 
   return (
     <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
