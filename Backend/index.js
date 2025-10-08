@@ -23,30 +23,19 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS setup
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://mega-project-ten.vercel.app",
-  "https://mega-project-ntwu.vercel.app",
-  "https://megaproject09.netlify.app",
-];
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (like Postman)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-    credentials: true, // allows cookies to be sent
+    origin: [
+      "*",
+      "http://localhost:3000",                // ✅ for local frontend
+      "https://hpportfolio0901.netlify.app",  // ✅ your deployed frontend
+      "https://mega-project-bs9q.onrender.com" // ✅ backend (for internal calls)
+    ],
+    credentials: true,
   })
 );
 
-// Handle preflight requests for all routes
-app.options("*", cors({ origin: allowedOrigins, credentials: true }));
 
 // File upload
 app.use(
