@@ -20,7 +20,8 @@ exports.updateProfile = async (req, res) => {
 		if (!userDetails) {
 			return res.status(404).json({ success: false, message: "User not found" });
 		}
-
+		
+		console.log("User Details:", userDetails);
 		const profile = userDetails.additionalDetails;
 		if (!profile) {
 			return res.status(404).json({ success: false, message: "Profile not found" });
