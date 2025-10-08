@@ -29,7 +29,7 @@ app.use(
     origin: [
       "*",
       "http://localhost:3000",                // ✅ for local frontend
-      "https://hpportfolio0901.netlify.app",  // ✅ your deployed frontend
+      "https://megaproject09.netlify.app",  // ✅ your deployed frontend
       "https://mega-project-bs9q.onrender.com" // ✅ backend (for internal calls)
     ],
     credentials: true,
