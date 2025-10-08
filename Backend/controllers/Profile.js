@@ -6,59 +6,55 @@ const Course = require("../models/Course");
 
 // Method for updating a profile
 exports.updateProfile = async (req, res) => {
-	try {
-		const {
-			dateOfBirth = "",
-			about = "",
-			contactNumber = "",
-			gender = ""
-		} = req.body;
-		const id = req.user.id;
+  try {
+    const { dateOfBirth = "", about = "", contactNumber = "", gender = "" } = req.body;
+    const userId = req.user.id;
 
-		// Find the user and profile by ID
-		const userDetails = await User.findById(id).populate("additionalDetails");
-		if (!userDetails) {
-			return res.status(404).json({ success: false, message: "User not found" });
-		}
-		
-		console.log("User Details:", userDetails);
-		const profile = userDetails.additionalDetails;
-		if (!profile) {
-			console.log("Profile not found, creating one...");
-						const newProfile = await Profile.create({
-							dateOfBirth,
-							about,
-							contactNumber,
-							gender,
-						});
-						userDetails.additionalDetails = newProfile._id;
-						await userDetails.save();
-		}
+    // 1️⃣ Find the user
+    const user = await User.findById(userId).populate("additionalDetails");
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
 
-		// Update profile fields
-		profile.dateOfBirth = dateOfBirth;
-		profile.about = about;
-		profile.contactNumber = contactNumber;
-		profile.gender = gender;
-		await profile.save();
+    // 2️⃣ Check if profile exists — if not, create a new one
+    let profile = user.additionalDetails;
+    if (!profile) {
+      profile = await Profile.create({
+        dateOfBirth,
+        about,
+        contactNumber,
+        gender,
+      });
 
-		// Re-fetch updated user with populated profile
-		const updatedUser = await User.findById(id).populate("additionalDetails");
+      user.additionalDetails = profile._id;
+      await user.save();
+    } else {
+      // 3️⃣ If profile exists, update it
+      profile.dateOfBirth = dateOfBirth;
+      profile.about = about;
+      profile.contactNumber = contactNumber;
+      profile.gender = gender;
+      await profile.save();
+    }
 
-		// Return updated combined data
-		return res.json({
-			success: true,
-			message: "Profile updated successfully",
-			updatedUserDetails: updatedUser,
-		});
-	} catch (error) {
-		console.error("Error updating profile:", error);
-		return res.status(500).json({
-			success: false,
-			error: error.message,
-		});
-	}
+    // 4️⃣ Get updated user with populated profile
+    const updatedUser = await User.findById(userId).populate("additionalDetails");
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      updatedUserDetails: updatedUser,
+    });
+  } catch (error) {
+    console.error("❌ Error updating profile:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while updating profile",
+      error: error.message,
+    });
+  }
 };
+
 
 exports.deleteAccount = async (req, res) => {
 	try {
