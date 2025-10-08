@@ -24,7 +24,15 @@ exports.updateProfile = async (req, res) => {
 		console.log("User Details:", userDetails);
 		const profile = userDetails.additionalDetails;
 		if (!profile) {
-			return res.status(404).json({ success: false, message: "Profile not found" });
+			console.log("Profile not found, creating one...");
+						const newProfile = await Profile.create({
+							dateOfBirth,
+							about,
+							contactNumber,
+							gender,
+						});
+						userDetails.additionalDetails = newProfile._id;
+						await userDetails.save();
 		}
 
 		// Update profile fields
