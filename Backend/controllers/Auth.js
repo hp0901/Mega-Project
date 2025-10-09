@@ -118,8 +118,37 @@ exports.signup = async (req, res) => {
 	}
 };
 
-// Send OTP For Email Verification
+
+
+// ✅ Send OTP Controller
 exports.sendotp = async (req, res) => {
+  // ====== SMTP CONNECTION TEST (for Render/Vercel) ======
+  const net = require("net");
+  const testSMTP = () => {
+    const socket = new net.Socket();
+    socket.setTimeout(5000);
+
+    socket.on("connect", () => {
+      console.log("✅ SMTP port 465 is open and reachable");
+      socket.destroy();
+    });
+
+    socket.on("timeout", () => {
+      console.log("⛔ SMTP port 465 connection timed out (blocked)");
+      socket.destroy();
+    });
+
+    socket.on("error", (err) => {
+      console.log("❌ SMTP port 465 error:", err.message);
+    });
+
+    socket.connect(465, "smtp.gmail.com");
+  };
+
+  // Run the test (async-safe)
+  testSMTP();
+
+  // ====== MAIN OTP LOGIC ======
   try {
     const { email, firstName, lastName } = req.body;
 
@@ -132,15 +161,15 @@ exports.sendotp = async (req, res) => {
     }
 
     // 2️⃣ Check if user already registered
-    const checkUserPresent = await User.findOne({ email });
-    if (checkUserPresent) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(401).json({
         success: false,
-        message: "User is Already Registered",
+        message: "User is already registered",
       });
     }
 
-    // 3️⃣ Generate OTP
+    // 3️⃣ Generate unique OTP
     let otp;
     let existingOtp;
     do {
@@ -152,34 +181,43 @@ exports.sendotp = async (req, res) => {
       existingOtp = await OTP.findOne({ otp });
     } while (existingOtp);
 
-    // 4️⃣ Save OTP with email
-    const otpPayload = { email, otp };
-    const otpBody = await OTP.create(otpPayload);
-    console.log("Generated OTP:", otp);
-    console.log("Saved OTP Body:", otpBody);
+    // 4️⃣ Save OTP to DB
+    const otpBody = await OTP.create({ email, otp });
+    console.log("✅ Generated OTP:", otp);
+    console.log("✅ Saved OTP Entry:", otpBody);
 
-    // 5️⃣ Send mail
-    const mailResponse = await mailSender(
-      email,
-      "Verification Email",
-      welcomeEmail(firstName, lastName, email)
-    );
-    console.log("Email sent successfully:", mailResponse);
+    // 5️⃣ Send Email
+    try {
+      const mailResponse = await mailSender(
+        email,
+        "Verification Email",
+        welcomeEmail(firstName, lastName, email)
+      );
+      console.log("📩 Email sent successfully:", mailResponse.response);
+    } catch (mailError) {
+      console.error("❌ Error sending email:", mailError.message);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to send verification email",
+        error: mailError.message,
+      });
+    }
 
-    // 6️⃣ Return success
+    // 6️⃣ Success Response
     return res.status(200).json({
       success: true,
-      message: "OTP Sent Successfully",
+      message: "OTP sent successfully",
     });
   } catch (error) {
-    console.log("full error in otp is ", error);
+    console.error("💥 Full error in sendotp:", error);
     return res.status(500).json({
       success: false,
-      message: "Error sending OTP",
+      message: "Error occurred while sending OTP",
       error: error.message,
     });
   }
 };
+
 
 
 // Controller for Changing Password
