@@ -9,7 +9,7 @@ const Profile = require("../models/Profile");
 const { OAuth2Client } = require("google-auth-library");
 const { response } = require("express");
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
+const welcomeEmail = require("../mail/welcomeEmail");
 // const emailTemplate = require("../mail/emailVerificationTemplate");
 
 require("dotenv").config();
@@ -121,7 +121,7 @@ exports.signup = async (req, res) => {
 // Send OTP For Email Verification
 exports.sendotp = async (req, res) => {
 	try {
-		const { email } = req.body;
+		const { email , firstName , lastName } = req.body;
 
 		// Check if user is already present
 		// Find user with provided email
@@ -154,6 +154,13 @@ exports.sendotp = async (req, res) => {
 		const otpPayload = { email, otp };
 		const otpBody = await OTP.create(otpPayload);
 		console.log("OTP Body", otpBody);
+
+		const mailResponse = await mailSender(
+		email,
+		"Verification Email",
+		 welcomeEmail( firstName, lastName, email)
+		)
+    	console.log("Email sent successfully:", mailResponse);
 		res.status(200).json({
 			success: true,
 			message: `OTP Sent Successfully`,

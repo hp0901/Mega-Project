@@ -7,7 +7,8 @@ const Course = require("../models/Course");
 // Method for updating a profile
 exports.updateProfile = async (req, res) => {
   try {
-    const { dateOfBirth = "", about = "", contactNumber = "", gender = "" } = req.body;
+    const { dateOfBirth = "", about = "", contactNumber = "", gender = ""
+		, firstName = "", lastName = "" } = req.body;
     const userId = req.user.id;
 
     // 1️⃣ Find the user
@@ -19,21 +20,27 @@ exports.updateProfile = async (req, res) => {
     // 2️⃣ Check if profile exists — if not, create a new one
     let profile = user.additionalDetails;
     if (!profile) {
+		console.log("Creating new profile");
       profile = await Profile.create({
         dateOfBirth,
         about,
         contactNumber,
         gender,
+		lastName,
+		firstName,
       });
 
       user.additionalDetails = profile._id;
       await user.save();
     } else {
       // 3️⃣ If profile exists, update it
+	  console.log("Updating existing profile");
       profile.dateOfBirth = dateOfBirth;
       profile.about = about;
       profile.contactNumber = contactNumber;
       profile.gender = gender;
+	  profile.firstName = firstName;
+	  profile.lastName = lastName;
       await profile.save();
     }
 
