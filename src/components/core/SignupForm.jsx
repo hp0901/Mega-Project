@@ -47,7 +47,8 @@ function SignupForm()  {
       ...formdata,
       accountType,
     }
-
+    console.log("Signup data is ", signupData);
+    console.log("Email is ", formdata.email);
     // store signup data temporarily until OTP verification
     dispatch(setSignupData(signupData))
     dispatch(sendOtp(formdata.email, navigate))
