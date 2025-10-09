@@ -5,6 +5,7 @@ import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
 import { endpoints } from "../apis"
+import { data } from "react-router-dom"
 
 const {
   SENDOTP_API,
@@ -15,7 +16,7 @@ const {
   GOOGLE_LOGIN_API,
 } = endpoints
 
-export function sendOtp(email, navigate) {
+export function sendOtp(data, navigate) {
   console.log("enter in otp")
   return async (dispatch) => {
     console.log("step 1")
@@ -25,7 +26,7 @@ export function sendOtp(email, navigate) {
     dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
-        email,
+        data,
         checkUserPresent: true,
       })
       console.log("SEND OTP API RESPONSE............", response)
