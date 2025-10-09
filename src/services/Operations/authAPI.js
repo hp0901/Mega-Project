@@ -5,7 +5,7 @@ import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
 import { endpoints } from "../apis"
-import { data } from "react-router-dom"
+
 
 const {
   SENDOTP_API,
@@ -19,10 +19,7 @@ const {
 export function sendOtp(data, navigate) {
   console.log("enter in otp")
   return async (dispatch) => {
-    console.log("step 1")
     const toastId = toast.loading("Loading...")
-    console.log("step 2")
-
     dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
