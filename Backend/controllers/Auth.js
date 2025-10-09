@@ -10,7 +10,6 @@ const { OAuth2Client } = require("google-auth-library");
 const { response } = require("express");
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const welcomeEmail = require("../mail/welcomeEmail");
-const { calcLength } = require("framer-motion");
 // const emailTemplate = require("../mail/emailVerificationTemplate");
 
 require("dotenv").config();
