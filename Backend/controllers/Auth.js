@@ -9,7 +9,7 @@ const Profile = require("../models/Profile");
 const { OAuth2Client } = require("google-auth-library");
 const { response } = require("express");
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-const welcomeEmail = require("../mail/welcomeEmail");
+const {welcomeEmail} = require("../mail/welcomeEmail");
 // const emailTemplate = require("../mail/emailVerificationTemplate");
 
 require("dotenv").config();
@@ -121,34 +121,8 @@ exports.signup = async (req, res) => {
 
 
 // ✅ Send OTP Controller
+
 exports.sendotp = async (req, res) => {
-  // ====== SMTP CONNECTION TEST (for Render/Vercel) ======
-  const net = require("net");
-  const testSMTP = () => {
-    const socket = new net.Socket();
-    socket.setTimeout(5000);
-
-    socket.on("connect", () => {
-      console.log("✅ SMTP port 465 is open and reachable");
-      socket.destroy();
-    });
-
-    socket.on("timeout", () => {
-      console.log("⛔ SMTP port 465 connection timed out (blocked)");
-      socket.destroy();
-    });
-
-    socket.on("error", (err) => {
-      console.log("❌ SMTP port 465 error:", err.message);
-    });
-
-    socket.connect(465, "smtp.gmail.com");
-  };
-
-  // Run the test (async-safe)
-  testSMTP();
-
-  // ====== MAIN OTP LOGIC ======
   try {
     const { email, firstName, lastName } = req.body;
 
@@ -207,6 +181,7 @@ exports.sendotp = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "OTP sent successfully",
+      otp, // optionally return for testing, remove in production
     });
   } catch (error) {
     console.error("💥 Full error in sendotp:", error);
@@ -217,6 +192,7 @@ exports.sendotp = async (req, res) => {
     });
   }
 };
+
 
 
 
