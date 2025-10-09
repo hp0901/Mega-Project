@@ -23,7 +23,7 @@ export function sendOtp(data, navigate) {
     dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
-        data,
+        ...data,
         checkUserPresent: true,
       })
       console.log("SEND OTP API RESPONSE............", response)
