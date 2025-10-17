@@ -47,7 +47,8 @@ export default function PublishCourse() {
   formData.append("courseId", course._id);
   const courseStatus = getValues("public") ? COURSE_STATUS.PUBLISHED : COURSE_STATUS.DRAFT;
   formData.append("status", courseStatus);
-
+  // console.log("Course Id is ", course._id)
+  // console.log("Course Status is ", courseStatus)
   // Only append thumbnail if a new file exists
   if (thumbnailFile) {
     formData.append("thumbnailImage", thumbnailFile);
@@ -58,6 +59,9 @@ export default function PublishCourse() {
 
     // For publish step, **use editCourseDetails** (not addCourseDetails)
     const result = await editCourseDetails(formData, token);
+    console.log("form data is ",formData)
+    console.log("Token is ", token)
+    console.log("Result is ",result)
     if (result) {
       goToCourses();
     } else {
@@ -73,7 +77,7 @@ export default function PublishCourse() {
 
 
   const onSubmit = (data) => {
-    // console.log(data)
+    console.log(data)
     handleCoursePublish()
   }
 

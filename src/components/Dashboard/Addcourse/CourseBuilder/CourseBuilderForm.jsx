@@ -9,13 +9,14 @@ import { toast } from 'react-hot-toast';
 import { createSection, updateSection } from '../../../../services/Operations/courseDetailsAPI'
 import NestedView from './NestedView';
 
+
 const CourseBuilderForm = () => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const [editSectionName, setEditSectionName] = useState(null);
   const { course } = useSelector((state) => state.course);
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-  const [ setLoading] = useState(false);
+  const [ loading ,setLoading] = useState(false);
 
   useEffect(() => {
     console.log("Course updated", course);
@@ -101,6 +102,7 @@ const CourseBuilderForm = () => {
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <IconBtn
             type="submit"
+            disabled={loading}
             text={editSectionName ? "Edit Section Name" : "Create Section"}
             outline={true}
             customClasses="text-white"

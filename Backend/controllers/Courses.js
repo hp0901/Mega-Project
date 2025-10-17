@@ -221,7 +221,7 @@ exports.editCourse = async (req, res) => {
     const { courseId } = req.body
     const updates = req.body
     const course = await Course.findById(courseId)
-
+    console.log("Course to be updated: ", course)
     if (!course) {
       return res.status(404).json({ error: "Course not found" })
     }

@@ -15,9 +15,12 @@ export default function RequirementsField({
 
   useEffect(() => {
     if (editCourse) {
-      setRequirementsList(course?.instructions)
+      setRequirementsList(Array.isArray(course?.instructions) ? course.instructions : [])
     }
-    register(name, { required: true, validate: (value) => value.length > 0 })
+    register(name, {
+      required: true,
+      validate: (value) => Array.isArray(value) ? value.length > 0 : !!value,
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -27,16 +30,16 @@ export default function RequirementsField({
   }, [requirementsList])
 
   const handleAddRequirement = () => {
-    if (requirement) {
-      setRequirementsList([...requirementsList, requirement])
+    if (requirement.trim()) {
+      setRequirementsList([...requirementsList, requirement.trim()])
       setRequirement("")
     }
   }
 
   const handleRemoveRequirement = (index) => {
-    const updatedRequirements = [...requirementsList]
-    updatedRequirements.splice(index, 1)
-    setRequirementsList(updatedRequirements)
+    const updated = [...requirementsList]
+    updated.splice(index, 1)
+    setRequirementsList(updated)
   }
 
   return (
@@ -44,6 +47,7 @@ export default function RequirementsField({
       <label className="text-sm text-richblack-5" htmlFor={name}>
         {label} <sup className="text-pink-200">*</sup>
       </label>
+
       <div className="flex flex-col items-start space-y-2">
         <input
           type="text"
@@ -60,14 +64,15 @@ export default function RequirementsField({
           Add
         </button>
       </div>
-      {requirementsList.length > 0 && (
+
+      {Array.isArray(requirementsList) && requirementsList.length > 0 && (
         <ul className="mt-2 list-inside list-disc">
-          {requirementsList.map((requirement, index) => (
+          {requirementsList.map((req, index) => (
             <li key={index} className="flex items-center text-richblack-5">
-              <span>{requirement}</span>
+              <span>{req}</span>
               <button
                 type="button"
-                className="ml-2 text-xs text-pure-greys-300 "
+                className="ml-2 text-xs text-pure-greys-300"
                 onClick={() => handleRemoveRequirement(index)}
               >
                 clear
@@ -76,6 +81,7 @@ export default function RequirementsField({
           ))}
         </ul>
       )}
+
       {errors[name] && (
         <span className="ml-2 text-xs tracking-wide text-pink-200">
           {label} is required

@@ -27,7 +27,7 @@ import Catalog from './pages/Catalog'
 import CourseDetails from './pages/CourseDetails'
 import VideoDetails from './components/core/ViewCourse/VideoDetails'
 import ViewCourse from './pages/ViewCourse'
-
+import PurchaseHistory from './pages/PurchaseHistory'
 
 
 
@@ -118,6 +118,7 @@ function App  ()  {
         >
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
+            <Route path="dashboard/purchase-history" element={<PurchaseHistory />} />
               <Route
                 path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
                 element={<VideoDetails />}

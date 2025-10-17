@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 const ContactUsForm = () => {
 
 
-    const [setLoading] = useState(false)
+    const [loading ,setLoading] = useState(false)
     const {
         register,
         handleSubmit,reset,

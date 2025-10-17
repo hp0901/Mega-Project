@@ -83,15 +83,6 @@ function Catalog() {
     if (filterId !== "all") {
       filtered = filtered.filter((course) => course.category === filterId);
     }
-
-    // Sorting
-    if (active === 1) {
-      filtered = filtered.sort((a, b) => b.enrolledCount - a.enrolledCount);
-    } else {
-      filtered = filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    }
-
-    setFilteredCourses(filtered);
   };
 
   // Handle Most Popular / New toggle
@@ -163,26 +154,6 @@ function Catalog() {
             {cat.name}
           </button>
         ))}
-      </div>
-
-      {/* Most Popular / New Toggle */}
-      <div className="mx-auto max-w-maxContent py-4 px-4 flex gap-4 flex-wrap">
-        <p
-          className={`px-4 py-2 cursor-pointer rounded ${
-            active === 1 ? "bg-yellow-25 text-black" : "bg-richblack-700 text-richblack-5"
-          }`}
-          onClick={() => handleActiveChange(1)}
-        >
-          Most Popular
-        </p>
-        <p
-          className={`px-4 py-2 cursor-pointer rounded ${
-            active === 2 ? "bg-yellow-25 text-black" : "bg-richblack-700 text-richblack-5"
-          }`}
-          onClick={() => handleActiveChange(2)}
-        >
-          New
-        </p>
       </div>
 
       {/* Courses Grid */}
