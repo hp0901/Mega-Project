@@ -2,7 +2,7 @@
 // const BASE_URL = "https://mega-project-bs9q.onrender.com/api/v1";
 
 // const BASE_URL = "http://localhost:4000/api/v1";
-const BASE_URL = "http://65.0.135.56:4000/api/v1";
+const BASE_URL = "https://harsh.myftp.org/api/v1";
 
 // ======================== AUTH ENDPOINTS ========================
 export const endpoints = {
