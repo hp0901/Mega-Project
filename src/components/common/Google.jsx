@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { setUser as setProfileUser } from "../../slices/profileSlice";
 
-const GOOGLE_LOGIN_API = "https://mega-project-bs9q.onrender.com/api/v1/auth/googlelogin";
+const GOOGLE_LOGIN_API = "https://harsh.myftp.org/api/v1/auth/googlelogin";
 
 function LoginButton() {
   const dispatch = useDispatch();
