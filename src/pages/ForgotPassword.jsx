@@ -12,6 +12,9 @@ function ForgotPassword()  {
   const dispatch = useDispatch()
 
   const handleOnSubmit = (e) => {
+    e.preventDefault();
+    console.log("Email is : ",email)
+    console.log("SetEmail is : ", emailSent)
     dispatch(getPasswordResetToken(email,setEmailSent))
   }
 

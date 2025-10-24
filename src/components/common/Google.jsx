@@ -8,6 +8,8 @@ import { setUser as setProfileUser } from "../../slices/profileSlice";
 
 const GOOGLE_LOGIN_API = "https://harsh.myftp.org/api/v1/auth/googlelogin";
 
+// const GOOGLE_LOGIN_API = "http://localhost:4000/api/v1/auth/googlelogin";
+
 function LoginButton() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
