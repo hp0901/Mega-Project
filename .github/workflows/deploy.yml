@@ -25,7 +25,7 @@ jobs:
           node-version: "20"
           cache: 'npm' # Cache npm dependencies
 
-      # --- 1. FIXED (React in root) ---
+      # --- 1. React in root ---
       - name: Build React Client
         run: |
           echo "Building React client..."
@@ -37,7 +37,7 @@ jobs:
           
           # This will create a 'build' folder in the root
 
-      # --- 2. FIXED (Node.js in Backend) ---
+      # --- 2. Node.js in Backend ---
       - name: Install Server Dependencies
         run: |
           echo "Installing server dependencies..."
@@ -45,7 +45,7 @@ jobs:
           cd Backend 
           npm install --omit=dev # Production dependencies only
 
-      # --- 3. FIXED (Copy 'build' and 'Backend') ---
+      # --- 3. Copy 'build' and 'Backend' ---
       - name: Copy built files to EC2
         uses: appleboy/scp-action@master
         with:
@@ -58,13 +58,10 @@ jobs:
           source: "build, Backend"
           # This is the destination folder we created on the server
           target: "/var/www/my-app"
-          
-          # --- THIS IS THE FIX ---
-          # 'rm: true' failed due to folder permissions.
-          # 'overwrite: true' will just copy files on top, which is allowed.
+          # Overwrite files instead of removing dir (for permissions)
           overwrite: true
           
-      # --- 4. FIXED (Paths on server) ---
+      # --- 4. Run commands on server ---
       - name: Run post-deploy commands on EC2
         uses: appleboy/ssh-action@master
         with:
@@ -89,9 +86,10 @@ jobs:
             
             # Start or restart the backend app using pm2
             echo "Restarting PM2 application..."
-            # Note: This assumes your main server file is 'server.js'
-            # If it's index.js, change 'server.js' to 'index.js'
-            pm2 restart my-app || pm2 start server.js --name my-app
+            
+            # --- THIS IS THE FIX ---
+            # Changed 'server.js' to 'index.js' to match your main file
+            pm2 restart my-app || pm2 start index.js --name my-app
             
             # Save the pm2 process list to run on startup
             pm2 save
