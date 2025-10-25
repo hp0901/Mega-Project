@@ -29,9 +29,6 @@ import VideoDetails from './components/core/ViewCourse/VideoDetails'
 import ViewCourse from './pages/ViewCourse'
 import PurchaseHistory from './pages/PurchaseHistory'
 
-
-
-
 function App  ()  {
   const { user } = useSelector((state) => state.profile)
 
