@@ -1,48 +1,51 @@
-# Name of your workflow
 name: MERN App CI-CD Pipeline
 
-# Run this workflow on a push to the 'main' branch
 on:
   push:
     branches:
       - main
 
-# Define the deployment job
 jobs:
   deploy:
-    # Use the latest GitHub-hosted Ubuntu runner
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out your repository's code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js (same version as your server)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: 'npm' # Cache npm dependencies
+          cache: 'npm'
 
-      # --- FRONTEND BUILD ---
+      # --- 1. EDIT THIS STEP ---
       - name: Build React Client
         run: |
           echo "Building React client..."
-          # Assumes your client is in a 'client' folder
+          
+          # --- CHANGE THIS LINE ---
+          # Change 'client' to your React app's folder name.
+          # If your React app is in the ROOT of your project (with no subfolder),
+          # you can DELETE this 'cd' line entirely.
           cd client 
+          
           npm install
           npm run build
 
-      # --- BACKEND PREP ---
+      # --- 2. EDIT THIS STEP ---
       - name: Install Server Dependencies
         run: |
           echo "Installing server dependencies..."
-          # Assumes your server is in a 'server' folder
+          
+          # --- CHANGE THIS LINE ---
+          # Change 'server' to your Node.js app's folder name.
+          # If your server is in the ROOT, DELETE this 'cd' line.
           cd server
+          
           npm install --omit=dev # Production dependencies only
 
-      # --- DEPLOY TO EC2 ---
+      # --- 3. EDIT THIS STEP ---
       - name: Copy built files to EC2
         uses: appleboy/scp-action@master
         with:
@@ -50,14 +53,26 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          # Copy the two folders we need
+          
+          # --- CHANGE THIS LINE ---
+          # This MUST match the folders from the steps above.
+          #
+          # Example 1: If your folders are 'frontend' and 'backend':
+          #   source: "frontend/build, backend"
+          #
+          # Example 2: If React is in the root and server is in 'backend':
+          #   source: "build, backend"
+          #
+          # Example 3: If both are in the root (not common for MERN):
+          #   source: "build, server.js, package.json, node_modules" 
+          #   (This would require changing the 'Install Server' step)
+          #
           source: "client/build, server"
-          # This is the destination folder we created on the server
+          
           target: "/var/www/my-app"
-          # This deletes old files in the target dir before copying
           rm: true 
           
-      # --- RUN COMMANDS ON EC2 ---
+      # --- 4. EDIT THIS STEP ---
       - name: Run post-deploy commands on EC2
         uses: appleboy/ssh-action@master
         with:
@@ -66,23 +81,27 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            # Create the .env file from the GitHub Secret
-            echo "Creating .env file..."
-            echo "${{ secrets.DOT_ENV_SERVER }}" > /var/www/my-app/server/.env
             
-            # --- CRITICAL: Load NVM ---
-            # We must load NVM so we can use node and pm2
+            # --- CHANGE THIS LINE ---
+            # This MUST match your server folder name from Step 2.
+            # If your server is in the root, set this to "" (empty string)
+            # and update the paths below.
+            SERVER_FOLDER_NAME=server
+            
+            # Create the .env file
+            echo "Creating .env file..."
+            echo "${{ secrets.DOT_ENV_SERVER }}" > /var/www/my-app/$SERVER_FOLDER_NAME/.env
+            
+            # Load NVM
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
+            
             # Navigate to the server directory
-            cd /var/www/my-app/server
+            cd /var/www/my-app/$SERVER_FOLDER_NAME
             
-            # Start or restart the backend app using pm2
             echo "Restarting PM2 application..."
+            # Assumes your main server file is 'server.js'
             pm2 restart my-app || pm2 start server.js --name my-app
-            
-            # Save the pm2 process list to run on startup
             pm2 save
             
             echo "Deployment successful!"
