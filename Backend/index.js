@@ -48,6 +48,7 @@ app.use(
 
 // Cloudinary connection
 cloudinaryConnect();
+console.log("Cloudinary connected successfully");
 
 // ----------------- ROUTES -----------------
 app.use("/api/v1/auth", userRoutes);
