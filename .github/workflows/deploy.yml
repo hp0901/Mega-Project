@@ -32,7 +32,6 @@ jobs:
           # Running in root, as per your screenshot
           npm install
           
-          # --- THIS IS THE FIX ---
           # We set CI=false to prevent ESLint warnings from failing the build
           CI=false npm run build 
           
@@ -59,8 +58,11 @@ jobs:
           source: "build, Backend"
           # This is the destination folder we created on the server
           target: "/var/www/my-app"
-          # This deletes old files in the target dir before copying
-          rm: true 
+          
+          # --- THIS IS THE FIX ---
+          # 'rm: true' failed due to folder permissions.
+          # 'overwrite: true' will just copy files on top, which is allowed.
+          overwrite: true
           
       # --- 4. FIXED (Paths on server) ---
       - name: Run post-deploy commands on EC2
