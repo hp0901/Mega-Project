@@ -74,7 +74,7 @@ exports.welcomeEmail = (firstname, lastname, email) => {
   <body>
       <div class="container">
           <a href="https://megaproject09.netlify.app"><img class="logo"
-                  src="https://drive.google.com/file/d/1QyWIJ27q8dqqW-ArOIaOn0mziPGTQhlt/view?usp=sharing" alt="StudyNotion Logo"></a>
+                  src="https://drive.google.com/file/d/1QyWIJ27q8dqqW-ArOIaOn0mziPGTQhlt/view?usp=sharing" alt="HP Logo"></a>
           <div class="header">Your New Journey Begins!</div>
           <div class="body">
               <p>Hi ${firstname} ${lastname},</p>
