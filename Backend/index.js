@@ -57,7 +57,7 @@ app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/reach", contactUsRoute);
 
 // Default route
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   return res.json({
     success: true,
     message: "Your server is up and running....",
