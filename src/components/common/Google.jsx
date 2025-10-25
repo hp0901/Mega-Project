@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { setUser as setProfileUser } from "../../slices/profileSlice";
 
-const GOOGLE_LOGIN_API = "https://api.studynotion.me/api/v1/api/v1/auth/googlelogin";
+const GOOGLE_LOGIN_API = "https://api.studynotion.me/api/v1/auth/googlelogin";
 
 // const GOOGLE_LOGIN_API = "http://localhost:4000/api/v1/auth/googlelogin";
 
