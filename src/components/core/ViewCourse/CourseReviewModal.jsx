@@ -10,7 +10,7 @@ import IconBtn from '../../../components/common/IconBtn'
 export default function CourseReviewModal({ setReviewModal }) {
   const { user } = useSelector((state) => state.profile)
   const { token } = useSelector((state) => state.auth)
-  const { courseEntireData } = useSelector((state) => state.viewCourse)
+  const { courseEntireData } = useSelector((state) => state.viewCourse) || {} ; // Added fallback {}
 
   const {
     register,
@@ -33,7 +33,7 @@ export default function CourseReviewModal({ setReviewModal }) {
   const onSubmit = async (data) => {
     await createRating(
       {
-        courseId: courseEntireData._id,
+        courseId: courseEntireData._id ,
         rating: data.courseRating,
         review: data.courseExperience,
       },

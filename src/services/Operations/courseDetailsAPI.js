@@ -118,7 +118,7 @@ export const editCourseDetails = async (data, token) => {
   try {
     console.log("Here in try block")
     const response = await apiConnector("POST", EDIT_COURSE_API, data, {
-      "Content-Type": "multipart/form-data",
+      // "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     })
     console.log("EDIT COURSE API RESPONSE............", response)

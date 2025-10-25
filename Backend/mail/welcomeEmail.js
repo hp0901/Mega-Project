@@ -73,8 +73,8 @@ exports.welcomeEmail = (firstname, lastname, email) => {
   
   <body>
       <div class="container">
-          <a href="https://studynotion-edtech-project.vercel.app"><img class="logo"
-                  src="https://i.ibb.co/7Xyj3PC/logo.png" alt="StudyNotion Logo"></a>
+          <a href="https://megaproject09.netlify.app"><img class="logo"
+                  src="https://drive.google.com/file/d/1QyWIJ27q8dqqW-ArOIaOn0mziPGTQhlt/view?usp=sharing" alt="StudyNotion Logo"></a>
           <div class="header">Your New Journey Begins!</div>
           <div class="body">
               <p>Hi ${firstname} ${lastname},</p>

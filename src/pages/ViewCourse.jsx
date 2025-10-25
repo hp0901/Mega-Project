@@ -20,19 +20,40 @@ export default function ViewCourse() {
 
   useEffect(() => {
     ;(async () => {
-      const courseData = await getFullDetailsOfCourse(courseId, token)
-      // console.log("Course Data here... ", courseData.courseDetails)
-      dispatch(setCourseSectionData(courseData.courseDetails.courseContent))
-      dispatch(setEntireCourseData(courseData.courseDetails))
-      dispatch(setCompletedLectures(courseData.completedVideos))
-      let lectures = 0
-      courseData?.courseDetails?.courseContent?.forEach((sec) => {
-        lectures += sec.subSection.length
-      })
-      dispatch(setTotalNoOfLectures(lectures))
+      try {
+        const courseData = await getFullDetailsOfCourse(courseId, token)
+        
+        // --- THIS IS THE FIX ---
+        // Add a "guard clause" to ensure data exists before dispatching
+        if (!courseData || !courseData.courseDetails) {
+          console.error("Could not fetch or invalid course data structure:", courseData)
+          // You could navigate away here if the course doesn't exist
+          // navigate("/dashboard/enrolled-courses")
+          return // Stop execution if data is invalid
+        }
+        // -------------------------
+
+        // console.log("Course Data here... ", courseData.courseDetails)
+        
+        // These dispatches are now safe
+        dispatch(setCourseSectionData(courseData.courseDetails.courseContent))
+        dispatch(setEntireCourseData(courseData.courseDetails))
+        dispatch(setCompletedLectures(courseData.completedVideos))
+        
+        let lectures = 0
+        // Add safety check for courseContent as well
+        courseData?.courseDetails?.courseContent?.forEach((sec) => {
+          lectures += sec.subSection.length
+        })
+        dispatch(setTotalNoOfLectures(lectures))
+
+      } catch (error) {
+        console.error("Error fetching full course details:", error)
+      }
     })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // --- ADDED DEPENDENCIES ---
+    // The effect must re-run if the courseId or token changes
+  }, [courseId, token, dispatch])
 
   return (
     <>
@@ -48,3 +69,4 @@ export default function ViewCourse() {
     </>
   )
 }
+

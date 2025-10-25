@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react"
 import { BsChevronDown } from "react-icons/bs"
 import { IoIosArrowBack } from "react-icons/io"
@@ -11,32 +12,54 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
   const [videoBarActive, setVideoBarActive] = useState("")
   const navigate = useNavigate()
   const location = useLocation()
-  const { sectionId, subSectionId } = useParams()
+  const { courseId, sectionId, subSectionId } = useParams() // Added courseId
+  
+  // --- THIS IS THE FIX ---
+  // We provide default values for each property in case state.viewCourse is null
   const {
-    courseSectionData,
-    courseEntireData,
-    totalNoOfLectures,
-    completedLectures,
-  } = useSelector((state) => state.viewCourse)
+    courseSectionData = [],
+    courseEntireData = null,
+    totalNoOfLectures = 0,
+    completedLectures = [],
+  } = useSelector((state) => state.viewCourse) || {}; // Add fallback {}
+  // -----------------------
 
   useEffect(() => {
     ;(() => {
+      // This check is now safe, as courseSectionData defaults to []
       if (!courseSectionData.length) return
+      
       const currentSectionIndx = courseSectionData.findIndex(
         (data) => data._id === sectionId
       )
+
+      // --- ADDED SAFETY CHECK ---
+      // If the section isn't found (e.g., data is loading), exit
+      if (currentSectionIndx === -1) {
+        return
+      }
+
       const currentSubSectionIndx = courseSectionData?.[
         currentSectionIndx
       ]?.subSection.findIndex((data) => data._id === subSectionId)
+
+      // --- ADDED SAFETY CHECK ---
+      // If the sub-section isn't found, exit
+      if (currentSubSectionIndx === -1 || currentSubSectionIndx === undefined) {
+        return
+      }
+
       const activeSubSectionId =
         courseSectionData[currentSectionIndx]?.subSection?.[
           currentSubSectionIndx
         ]?._id
+      
+      // Set the active section and subsection
       setActiveStatus(courseSectionData?.[currentSectionIndx]?._id)
       setVideoBarActive(activeSubSectionId)
     })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [courseSectionData, courseEntireData, location.pathname])
+    // Added missing dependencies
+  }, [courseSectionData, courseEntireData, location.pathname, sectionId, subSectionId])
 
   return (
     <>
@@ -84,7 +107,10 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
                   </span> */}
                   <span
                     className={`${
-                      activeStatus === course?.sectionName
+                      // --- LOGIC FIX ---
+                      // Was comparing activeStatus (an ID) to sectionName. 
+                      // Changed to compare ID to ID.
+                      activeStatus === course?._id
                         ? "rotate-0"
                         : "rotate-180"
                     } transition-all duration-500`}
@@ -107,7 +133,8 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
                       key={i}
                       onClick={() => {
                         navigate(
-                          `/view-course/${courseEntireData?._id}/section/${course?._id}/sub-section/${topic?._id}`
+                          // Use courseId from params or courseEntireData
+                          `/view-course/${courseId || courseEntireData?._id}/section/${course?._id}/sub-section/${topic?._id}`
                         )
                         setVideoBarActive(topic._id)
                       }}

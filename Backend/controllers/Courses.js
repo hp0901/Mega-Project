@@ -220,6 +220,7 @@ exports.editCourse = async (req, res) => {
   try {
     const { courseId } = req.body
     const updates = req.body
+    console.log("Course id is ",courseId)
     const course = await Course.findById(courseId)
     console.log("Course to be updated: ", course)
     if (!course) {
