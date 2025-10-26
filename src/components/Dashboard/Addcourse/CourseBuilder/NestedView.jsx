@@ -27,10 +27,15 @@ const NestedView = ({ handleChangeEditSectionName }) => {
   }
 
   const handleDeleteSubSection = async (subSectionId, sectionId) => {
-    const result = await deleteSubSection({ subSectionId, sectionId, token });
-    if (result) dispatch(setCourse(result));
-    setConfirmationModal(null);
+  // Pass the data object as the first argument and the token as the second
+  const result = await deleteSubSection({ subSectionId, sectionId }, token); 
+  
+  if (result) {
+    // Dispatch the updated course data
+    dispatch(setCourse(result));
   }
+  setConfirmationModal(null);
+}
 
   return (
     <div className='rounded-lg bg-richblack-700 p-6 px-8'>
@@ -62,9 +67,13 @@ const NestedView = ({ handleChangeEditSectionName }) => {
           <div>
             {section?.subSection?.map((lecture) => (
               <div key={lecture?._id} className='flex items-center justify-between gap-x-3 border-b-2'>
-                <div className='flex items-center gap-x-3'>
-                  <RxDropdownMenu />
-                  <p>{lecture.title}</p>
+                {/* Add a cursor-pointer and onClick handler */}
+                <div
+                    className='flex items-center gap-x-3 cursor-pointer'
+                    onClick={() => setViewSubSection({ ...lecture, sectionId: section._id })}
+                >
+                    <RxDropdownMenu />
+                    <p>{lecture.title}</p>
                 </div>
                 <div className='flex items-center gap-x-3'>
                   <button onClick={() => setEditSubSection({ ...lecture, sectionId: section._id })}>

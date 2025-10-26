@@ -117,7 +117,7 @@ function App  ()  {
             <>
             <Route path="dashboard/purchase-history" element={<PurchaseHistory />} />
               <Route
-                path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
                 element={<VideoDetails />}
               />
             </>
