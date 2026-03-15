@@ -26,7 +26,7 @@ exports.resetPasswordToken = async (req, res) => {
 		console.log("DETAILS", updatedDetails);
 
 		const url = `https://megaproject09.netlify.app/update-password/${token}`   || `https://main.d2iapxgfmla0uo.amplifyapp.com/update-password/${token}`; ;
-
+		// const url = `http://localhost:3000/update-password/${token}`;
 		await mailSender(
 			email,
 			"Password Reset",
