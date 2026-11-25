@@ -30,7 +30,6 @@
     "razorpay": "^2.9.5"
   },
   "engines": {
-    "node": ">=18.x"
-  }
+  "node": "20.x"}
 }
 
